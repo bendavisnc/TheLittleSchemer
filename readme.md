@@ -21,4 +21,4 @@
 ### This is an SBT project. To run, simply clone this project and run in a console, "sbt test"
 
 
-<img src="http://i.imgur.com/QbkbYkG.png" style="width: 800px;"></img>
+<img src="http://i.imgur.com/QbkbYkG.png" width="800"></img>
