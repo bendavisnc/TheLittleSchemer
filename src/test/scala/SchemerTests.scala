@@ -162,6 +162,115 @@ class SchemerTests extends org.specs2.mutable.Specification {
       insertRStar("roast", "chuck", p3) must_== expectedResult
 
     }
+
+    "occurStar" >> {
+      val a = "banana"
+      val l = (("banana" :: Nil) ::
+        ("split" :: (((("banana" :: "ice" :: Nil) :: Nil) :: Nil) ::
+        ("cream" :: ("banana" :: Nil) :: Nil) ::
+        "sherbet" :: Nil) :: Nil) ::
+        ("banana" :: Nil) ::
+        ("bread" :: Nil) ::
+        ("banana" :: "brandy" :: Nil) :: Nil)
+
+      occurStar(a, l) must_== 5
+    }
+
+    "subStar" >> {
+      val neww = "orange"
+      val old = "banana"
+      val l = (("banana" :: Nil) ::
+        ("split" :: (((("banana" :: "ice" :: Nil) :: Nil) :: Nil) ::
+          ("cream" :: ("banana" :: Nil) :: Nil) ::
+          "sherbet" :: Nil) :: Nil) ::
+        ("banana" :: Nil) ::
+        ("bread" :: Nil) ::
+        ("banana" :: "brandy" :: Nil) :: Nil)
+      val expectedResult = (("orange" :: Nil) ::
+        ("split" :: (((("orange" :: "ice" :: Nil) :: Nil) :: Nil) ::
+          ("cream" :: ("orange" :: Nil) :: Nil) ::
+          "sherbet" :: Nil) :: Nil) ::
+        ("orange" :: Nil) ::
+        ("bread" :: Nil) ::
+        ("orange" :: "brandy" :: Nil) :: Nil)
+
+      subStar(neww, old, l) must_== expectedResult
+    }
+
+    "insertLStar" >> {
+      val neww = "pecker"
+      val old = "chuck"
+      val l = (("how" :: "much" :: ("wood" :: Nil) :: Nil) ::
+        "could" ::
+        (("a" :: ("wood" :: Nil) :: "chuck" :: Nil) :: Nil) ::
+        ((("chuck" :: Nil) :: Nil) :: Nil) ::
+        ("if" :: ("a" :: Nil) :: (("wood" :: "chuck" :: Nil) :: Nil) :: Nil) ::
+        "could" :: "chuck" :: "wood" :: Nil)
+      val expectedResult = (("how" :: "much" :: ("wood" :: Nil) :: Nil) ::
+        "could" ::
+        (("a" :: ("wood" :: Nil) :: "pecker" :: "chuck" :: Nil) :: Nil) ::
+        ((("pecker" :: "chuck" :: Nil) :: Nil) :: Nil) ::
+        ("if" :: ("a" :: Nil) :: (("wood" :: "pecker" :: "chuck" :: Nil) :: Nil) :: Nil) ::
+        "could" :: "pecker" :: "chuck" :: "wood" :: Nil)
+
+      insertLStar(neww, old, l) must_== expectedResult
+    }
+
+    "memberStar" >> {
+      val a = "chips"
+      val l = (("potato" :: Nil) :: ("chips" :: (("with" :: Nil) :: "fish" :: Nil) :: ("chips" :: Nil) :: Nil) :: Nil)
+      memberStar(a, l) must_== true
+    }
+
+    "leftmost" >> {
+      val l = ((("hot" :: Nil) :: ("tuna" :: ("and" :: Nil) :: Nil) :: Nil) :: "cheese" :: Nil)
+      leftmost(l) must_== "hot"
+    }
+
+    "isEqList" >> {
+      var l1 = ("strawberry" :: "ice" :: "cream" :: Nil)
+      var l2 = ("strawberry" :: "cream" :: "ice" :: Nil)
+      isEqList(l1, l2) must_== false
+      l1 = ("strawberry" :: "ice" :: "cream" :: Nil)
+      l2 = ("strawberry" :: "ice" :: "cream" :: Nil)
+      isEqList(l1, l2) must_== true
+    }
+
+    "isEqListV2" >> {
+      var l1 = ("strawberry" :: "ice" :: "cream" :: Nil)
+      var l2 = ("strawberry" :: "cream" :: "ice" :: Nil)
+      isEqListV2(l1, l2) must_== false
+      l1 = ("strawberry" :: "ice" :: "cream" :: Nil)
+      l2 = ("strawberry" :: "ice" :: "cream" :: Nil)
+      isEqListV2(l1, l2) must_== true
+    }
+
+//    "isEqListV3" >> {
+//      var l1 = ("strawberry" :: "ice" :: "cream" :: Nil)
+//      var l2 = ("strawberry" :: "cream" :: "ice" :: Nil)
+//      isEqListV3(l1, l2) must_== false
+//      l1 = ("strawberry" :: "ice" :: "cream" :: Nil)
+//      l2 = ("strawberry" :: "ice" :: "cream" :: Nil)
+//      isEqListV3(l1, l2) must_== true
+//    }
+
+  }
+
+  "Chapter 6:" >> {
+    "isNumbered" >> {
+      var y = (3 :: '+ :: (4 :: '^ :: 5 :: Nil) :: Nil)
+      isNumbered(y) must_== true
+      y = (3 :: '+ :: (4 :: '^ :: 'sausage :: Nil) :: Nil)
+      isNumbered(y) must_== false
+    }
+
+    "isNumberedV2" >> {
+      var y = (3 :: '+ :: (4 :: '^ :: 5 :: Nil) :: Nil)
+      isNumberedV2(y) must_== true
+      y = (3 :: '+ :: (4 :: '^ :: 'sausage :: Nil) :: Nil)
+      isNumberedV2(y) must_== false
+    }
+
   }
 }
 
